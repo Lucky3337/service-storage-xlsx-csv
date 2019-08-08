@@ -1,0 +1,5 @@
+[run]
+include = xlsx_xsv_storage/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
