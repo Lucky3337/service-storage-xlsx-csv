@@ -73,6 +73,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "xlsx_xsv_storage.users.apps.UsersConfig",
+    "xlsx_xsv_storage.api.apps.ApiStorageConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
