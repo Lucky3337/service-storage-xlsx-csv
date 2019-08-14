@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('file/upload', views.FileUploadView.as_view()),
+    path('', views.SwaggerSchemaView.as_view())
     # path('video/<int:pk>/', views.VideoDetail.as_view()),
 ]
 

@@ -5,6 +5,7 @@ from django.conf import settings
 
 
 class FileSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = File
         fields = ["file", ]
