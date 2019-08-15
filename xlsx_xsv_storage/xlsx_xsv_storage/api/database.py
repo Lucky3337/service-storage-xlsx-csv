@@ -4,7 +4,7 @@ import psycopg2
 
 class Table:
 
-    def __init__(self, table_name, file_path, field_name_list, type_fields_dict, *args, **kwargs):
+    def __init__(self, table_name='', file_path='', field_name_list=list, type_fields_dict=dict, *args, **kwargs):
         self.table_name = table_name
         self.file_path = file_path,
         self.field_name_list = field_name_list

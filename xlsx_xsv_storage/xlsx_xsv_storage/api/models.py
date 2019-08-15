@@ -60,23 +60,15 @@ class File(models.Model):
 
     @staticmethod
     def str_get_type_value(row):
-        matching = re.findall(r'\d+', row)
+        matching = re.findall(r'^\d+$', row)
+
         # checking if row is type of number
         if len(matching) == 1:
             return 'int'
-        elif len(matching) >= 2:
-            matching = re.findall(r'^\d*.\d*$', row)
-            result = matching
-            if len(matching) == 1:
-                return 'float'
 
-        # checking if type row is string
-        matching = re.findall(r'\w+', row)
+        matching = re.findall(r'^\d*.\d*$', row)
         if len(matching) == 1:
-            if len(matching[0]) > 128:
-                return 'text'
-            else:
-                return 'varchar'
+            return 'float'
 
         # checking if type row is datetime
         matching = re.findall(r'^\d{2}.\d{2}.\d{4} \d{2}.\d{2}.\d{2}$', row)
@@ -95,6 +87,14 @@ class File(models.Model):
         matching = re.findall(r'^\d{2}.\d{2}.\d{2}$', row)
         if len(matching) == 1:
             return 'time'
+
+        # checking if type row is string
+        matching = re.findall(r'\w+', row)
+        if len(matching) >= 1:
+            if len(' '.join(matching)) > 128:
+                return 'text'
+            else:
+                return 'varchar'
 
         # otherwise will be return empty row
         return ''
@@ -220,7 +220,8 @@ class File(models.Model):
 
 @receiver(post_save, sender=File)
 def create_table(instance, **kwargs):
-    # print(f'table_name - {instance.table_name}')
+    # When object File have been saved in DB. This script will be working for create table and save data in DB.
+
     if instance.type_file == 'xlsx':
         field_name_list, type_fields_dict, rows_list = File.read_xlsx_file(instance.file.path)
         controller = ControllerDB(
