@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  description: 'Test task'
+  title: 'This service saves excell files to th DB'
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8002
+
+paths:
+  /file/upload:
+    post:
+      summary: "Upload Excel file with format .xlxs or *.csv"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                title:
+                  type: string
+
+      response:
+        201:
+          content:
+            application/json:
+              schema:
+                properties:
+                  file:
+                    type: string
+                    format: binary
+
+
+
+
+
