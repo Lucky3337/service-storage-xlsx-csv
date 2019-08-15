@@ -1,5 +1,4 @@
 from .database import Table
-import json
 
 
 class ControllerDB:
@@ -18,11 +17,13 @@ class ControllerDB:
         )
 
     def run_xlsx(self):
+        # For *.xlsx pattern files. Crete table if it is not exist and write dato in the table DB
         result, response = self.table.create()
         if result:
             self.table.insert_data_from_xlsx_file(data=self.rows_list)
 
     def run_csv(self):
+        # For *.csv pattern files. Crete table if it is not exist and write dato in the table DB
         result, response = self.table.create()
         if result:
             self.table.insert_data_from_csv_file(data=self.rows_list)
@@ -85,8 +86,7 @@ class ControllerData(ControllerDB):
         else:
             return False
 
-    def check_table_column_is_exist(self):
-        pass
+
 
 
 

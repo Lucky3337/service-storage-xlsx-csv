@@ -1,7 +1,13 @@
 xlsx-xsv-storage
 ================
 
-Service storage xlsx xsv files
+Service storage files with pattern *.xlsx|*.csv in DB. This file have to be without pk (primary id) or id columns.
+For example if file name is 'fruits2'. With same name will be crete table in DB.
+Than read information from this file.
+    * get all columns name
+    * get types for each columns ( If type from one of cell will be different from each other cell from the same column, that will be type is 'text' )
+    * get all rows
+
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
@@ -21,17 +27,6 @@ Moved to settings_.
 Basic Commands
 --------------
 
-Setting Up Your Users
-^^^^^^^^^^^^^^^^^^^^^
-
-* To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
-
-* To create an **superuser account**, use this command::
-
-    $ python manage.py createsuperuser
-
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
-
 Type checks
 ^^^^^^^^^^^
 
@@ -44,18 +39,14 @@ Running type checks with mypy:
 Test coverage
 ^^^^^^^^^^^^^
 
-To run the tests, check your test coverage, and generate an HTML coverage report::
+To run the tests without docker
 
     $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
 
-Running tests with py.test
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+To run the tests without docker
 
-::
+    $ docker-compose -f local.yml run django coverage run -m pytest
 
-  $ pytest
 
 Live reloading and Sass CSS compilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -63,10 +54,6 @@ Live reloading and Sass CSS compilation
 Moved to `Live reloading and SASS compilation`_.
 
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
-
-
-
-
 
 Deployment
 ----------
@@ -79,6 +66,8 @@ Docker
 ^^^^^^
 
 See detailed `cookiecutter-django Docker documentation`_.
+
+For project build need to run docker-compose like this docker-compose -f local.yml up --build
 
 .. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
 
