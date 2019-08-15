@@ -44,7 +44,7 @@ class TableChangeFieldNameView(APIView):
     parser_class = (JSONParser,)
 
 
-    def put(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             print(f'tableName - {request.data["tableName"]}')
             print(f'fieldsName - {request.data["fieldsName"]}')
@@ -61,32 +61,32 @@ class TableChangeFieldNameView(APIView):
 
         except Exception as err:
             print(str(err))
-        return Response('OK')
+        return Response('OK', status=status.HTTP_200_OK)
 
 
-class TableChangeFieldPositionView(APIView):
-    """
-    Coloumn names change in table.
-    """
-
-    parser_class = (JSONParser,)
-
-
-    def put(self, request, *args, **kwargs):
-        try:
-            print(f'tableName - {request.data["tableName"]}')
-            print(f'fieldsName - {request.data["fieldsName"]}')
-            data = request.data["fieldsName"]
-            controller = ControllerData(table_name=request.data["tableName"])
-            # print(len(data))
-            if controller.check_table_is_exist():
-                if controller.check_table_columns_for_changes(data):
-                    controller.change_column_name(data)
-                else:
-                    return Response(f'Wrong data')
-            else:
-                return Response('Table does not exist')
-
-        except Exception as err:
-            print(str(err))
-        return Response('OK')
+# class TableChangeFieldPositionView(APIView):
+#     """
+#     Coloumn names change in table.
+#     """
+#
+#     parser_class = (JSONParser,)
+#
+#
+#     def put(self, request, *args, **kwargs):
+#         try:
+#             print(f'tableName - {request.data["tableName"]}')
+#             print(f'fieldsName - {request.data["fieldsName"]}')
+#             data = request.data["fieldsName"]
+#             controller = ControllerData(table_name=request.data["tableName"])
+#             # print(len(data))
+#             if controller.check_table_is_exist():
+#                 if controller.check_table_columns_for_changes(data):
+#                     controller.change_column_name(data)
+#                 else:
+#                     return Response(f'Wrong data')
+#             else:
+#                 return Response('Table does not exist')
+#
+#         except Exception as err:
+#             print(str(err))
+#         return Response('OK')
