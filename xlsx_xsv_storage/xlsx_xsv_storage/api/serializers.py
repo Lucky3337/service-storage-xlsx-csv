@@ -5,6 +5,8 @@ from django.conf import settings
 
 
 class FileSerializer(serializers.ModelSerializer):
+
+
     class Meta:
         model = File
         fields = ["file", ]
@@ -13,7 +15,7 @@ class FileSerializer(serializers.ModelSerializer):
         user_timezone = pytz.timezone(settings.TIME_ZONE)
         file = str(validated_data["file"]).split('.')
         print(f'validated_data - {validated_data}')
-        print(f'validated_data - {validated_data["file"]}')
+        print(f'validated_data file - {validated_data["file"]}')
 
         obj, created = File.objects.update_or_create(
             table_name=file[0],

@@ -69,13 +69,38 @@ class Table:
         print(query)
         return query
 
-    def _check_table_is_exist(self):
+
+    def _make_sql_columns_informations(self):
+        query = f"SELECT column_name, udt_name, ordinal_position \
+                                  FROM information_schema.columns \
+                                    WHERE table_schema = 'public' \
+                                   AND table_name   = '{self.table_name}';"
+
+        return query
+
+    def change_column_name(self,column_name, new_column_name):
+        query = f"ALTER TABLE {self.table_name} \
+                                RENAME COLUMN {column_name} TO {new_column_name};"
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+
+
+    def get_columns_informations(self):
+        query = self._make_sql_columns_informations()
+
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            table_coloumns = cursor.fetchall()
+        return table_coloumns
+
+    def check_table_is_exist(self):
         query = f"SELECT EXISTS ( \
            SELECT 1 \
            FROM pg_tables \
            WHERE schemaname = 'public' \
            AND tablename = '{self.table_name}' \
            );"
+
 
         with connection.cursor() as cursor:
             try:
@@ -84,18 +109,13 @@ class Table:
             except Exception:
                 return False
 
-    def _compare_coloumns_beetwin_file_and_table(self):
-        query = f"SELECT column_name, udt_name \
-                          FROM information_schema.columns \
-                            WHERE table_schema = 'public' \
-                           AND table_name   = '{self.table_name}';"
+    def _compare_columns_beetwin_file_and_table(self):
+        query = self._make_sql_columns_informations()
 
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            table_coloumns = cursor.fetchall()
-            print(f'field_name_list - {self.field_name_list}')
-            print(f'type_fields_dict - {self.type_fields_dict}')
-            print(table_coloumns)
+        table_coloumns = self.get_columns_informations()
+        print(f'field_name_list - {self.field_name_list}')
+        print(f'type_fields_dict - {self.type_fields_dict}')
+        print(table_coloumns)
 
         list_matching = []
         for index, coloumn in enumerate(table_coloumns):
@@ -127,8 +147,8 @@ class Table:
         return list_matching
 
     def create(self):
-        table_exist = self._check_table_is_exist()
-        coloumn_name = self._compare_coloumns_beetwin_file_and_table()
+        table_exist = self.check_table_is_exist()
+        coloumn_name = self._compare_columns_beetwin_file_and_table()
         print(f'table_exist - {table_exist}')
         if table_exist is False:
             sql_create_table = self._make_sql_create_table()
