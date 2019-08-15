@@ -35,3 +35,5 @@ openpyxl==2.6.2 # https://pypi.org/project/openpyxl/
 # Open API
 django-rest-swagger==2.2.0 # https://django-rest-swagger.readthedocs.io/en/latest/
 pyyaml==5.1.2 # https://pypi.org/project/PyYAML/
+drf-yasg==1.16.1 # https://pypi.org/project/drf-yasg/
+

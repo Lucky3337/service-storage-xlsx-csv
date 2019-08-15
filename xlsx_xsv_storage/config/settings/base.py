@@ -69,7 +69,8 @@ THIRD_PARTY_APPS = [
     # "allauth.account",
     # "allauth.socialaccount",
     "rest_framework",
-    "rest_framework_swagger"
+    "rest_framework_swagger",
+    "drf_yasg",
 ]
 
 LOCAL_APPS = [
