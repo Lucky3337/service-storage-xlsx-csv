@@ -1,4 +1,4 @@
-# xlsx-xsv-storage documentation build configuration file, created by
+# xlsx-xsv-storage documentation buildrf-yasgd configuration file, created by
 # sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its containing dir.

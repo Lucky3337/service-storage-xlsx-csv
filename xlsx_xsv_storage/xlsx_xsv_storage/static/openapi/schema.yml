@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  description: 'Test task'
+  title: 'This service saves excell files to th DB'
+  version: '1.0.0'
+
+servers:
+  - url: http://localhost:8002
+
+paths:
+  /file/upload:
+    post:
+      description: "File will be one of two type format - .xlxs, .csv . There are column of pk(primarykey) has not to be in the file.
+      Name of file is a table name in DB. If there is not table with such name in DB, that it will be create and all data from the file will be write there.
+      Otherwise table would not be created and all data from the file will be save to this table in DB."
+      summary: Upload Excel file with format .xlxs or *.csv
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                properties:
+                  file:
+                    type: string
+  /table/change_field_name:
+    post:
+      summary: Change column names.
+      description: 'To change table column names. Need to send JSON object with two params: tableName, fieldsName.
+      Where are tableName is simple table name in DB. fieldsName is JSON object with key and value, where key is positional column in table( from 1 to last positional without pk(primary key) column ) and value is new name for column.
+      '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                tableName:
+                  type: object
+                  example: fruits
+                fieldsName:
+                    $ref: "#components/schemas/fieldNameList"
+      responses:
+        200:
+          description: blabla
+          content:
+            application/json:
+              shema:
+                properties:
+                  result:
+                    type: string
+                    example: OK
+
+components:
+  schemas:
+    fieldNameList:
+      type: object
+      properties:
+        1:
+          type: string
+          example: newFieldName
+        2:
+          type: string
+          example: car
+        3:
+          type: string
+          example: tableName
+        4:
+          type: string
+          example: count
+        5:
+          type: string
+          example: phone
+
+
+
